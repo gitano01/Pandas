@@ -3,14 +3,16 @@ package com.example.models;
 public class CredencialesGeneradas {
 
 	private String usuario;
+	private String contrasenia;
 	private String consumerKey;
 	private String consumerSecret;
 	
 	
 	
-	public CredencialesGeneradas(String usuario, String consumerKey, String consumerSecret) {
+	public CredencialesGeneradas(String usuario, String contrasenia,String consumerKey, String consumerSecret) {
 		super();
 		this.usuario = usuario;
+		this.contrasenia = contrasenia;
 		this.consumerKey = consumerKey;
 		this.consumerSecret = consumerSecret;
 	}
@@ -19,6 +21,13 @@ public class CredencialesGeneradas {
 	}
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+	
+	public String getContrasenia() {
+		return contrasenia;
+	}
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
 	public String getConsumerKey() {
 		return consumerKey;

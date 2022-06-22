@@ -4,6 +4,7 @@ public class CredencialesResponse {
 	
 	private Long credencialid;
 	private String credencialUsuario;
+	private String credencialPassword;
 	private String credencialConsumerKey;
 	private String credencialConsumerSecret;
 	private String credencialFechaCreacion;
@@ -22,6 +23,13 @@ public class CredencialesResponse {
 	}
 	public void setCredencialUsuario(String credencialUsuario) {
 		this.credencialUsuario = credencialUsuario;
+	}
+	
+	public String getCredencialPassword() {
+		return credencialPassword;
+	}
+	public void setCredencialPassword(String credencialPassword) {
+		this.credencialPassword = credencialPassword;
 	}
 	public String getCredencialConsumerKey() {
 		return credencialConsumerKey;

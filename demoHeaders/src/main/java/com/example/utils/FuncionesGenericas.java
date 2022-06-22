@@ -36,10 +36,11 @@ public class FuncionesGenericas {
 		return Base64.getEncoder().encodeToString(sb.toString().getBytes());
 	}
 
+	
 	public String asignarCredenciales(CredencialesGeneradas credenciales) {
 
 		String result = null;
-		List<CredencialesResponse> lista = obtenerCredenciales(credenciales);
+		List<CredencialesResponse> lista = obtenerCredenciales();
 
 		for (CredencialesResponse elem : lista) {
 
@@ -50,7 +51,8 @@ public class FuncionesGenericas {
 
 				call = new SimpleJdbcCall(dataSourceConf).withFunctionName("insertarCredencial");
 				MapSqlParameterSource in = new MapSqlParameterSource();
-				in.addValue("nombre", credenciales.getUsuario());
+				in.addValue("usuario", credenciales.getUsuario());
+				in.addValue("contrasenia", credenciales.getContrasenia());
 				in.addValue("credencialconsumerkey", credenciales.getConsumerKey());
 				in.addValue("credencialconsumersecret", credenciales.getConsumerSecret());
 				result = call.execute(in).toString();
@@ -61,9 +63,9 @@ public class FuncionesGenericas {
 
 	}
 
-	public List<CredencialesResponse> obtenerCredenciales(CredencialesGeneradas credenciales) {
+	public List<CredencialesResponse> obtenerCredenciales() {
 
-		String sql = "select getcredenciales()";
+		String sql = "select * FROM getcredenciales()";
 
 		List<CredencialesResponse> list = this.jdbcTemplate.query(sql, new RowMapper<CredencialesResponse>() {
 			@Override
@@ -72,12 +74,12 @@ public class FuncionesGenericas {
 
 				credencial.setCredencialid(rs.getLong("credencialid"));
 				credencial.setCredencialUsuario(rs.getString("credencialusuario"));
+				credencial.setCredencialPassword(rs.getString("credencialpassword"));
 				credencial.setCredencialConsumerKey(rs.getString("credencialconsumerkey"));
 				credencial.setCredencialConsumerSecret(rs.getString("credencialconsumersecret"));
-				credencial.setCredencialConsumerSecret(rs.getString("credencialconsumersecret"));
 				credencial.setCredencialFechaCreacion(rs.getString("credencialfechacreacion"));
-
-				if (rs.getString("credencialfechamodificacion") == null) {
+				System.out.println(rs.getString("credencialfechamodificacion"));
+				if (rs.getString("credencialfechamodificacion") == "") {
 					credencial.setCredencialFechaModificacion("");
 				} else {
 					credencial.setCredencialFechaModificacion(rs.getString("credencialfechamodificacion"));

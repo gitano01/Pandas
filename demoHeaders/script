@@ -16,6 +16,7 @@ rglvakmlwbwxkcmoivvf
 		create table credenciales(
     credencialid serial,
     credencialusuario varchar,
+    credencialpassword varchar,
     credencialconsumerkey varchar,
     credencialconsumersecret varchar,
     credencialfechacreacion timestamptz(3) NOT NULL DEFAULT now(),
@@ -64,3 +65,14 @@ $BODY$
 	 RETURN 1;
 	END	
 $BODY$ language 'plpgsql'
+
+
+
+CREATE OR REPLACE FUNCTION getcredenciales() RETURNS table (credencialid int, credencialusuario varchar,credencialpassword varchar, credencialconsumerkey varchar, credencialconsumersecret varchar, credencialfechacreacion timestamptz(3),credencialfechamodificacion timestamptz(3),credencialactiva boolean)
+AS $$
+
+       
+	BEGIN
+		return query SELECT * FROM credenciales;
+	end;$$ 
+LANGUAGE plpgsql;
