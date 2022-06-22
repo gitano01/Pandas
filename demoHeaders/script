@@ -1,0 +1,66 @@
+Using generated security password: 68d453c0-3a07-4883-802b-11637267a4f1
+
+Using generated security password: 28fa1b73-a765-4e2b-8e6e-3c2506ea5a00
+
+
+
+rglvakmlwbwxkcmoivvf
+
+//		String usuario = "victor";
+//		
+//		String credencialUsuario = Base64.getEncoder().encodeToString(nombre.getBytes()); 
+//		return credencialUsuario;
+//		
+		//String output = "";
+
+		create table credenciales(
+    credencialid serial,
+    credencialusuario varchar,
+    credencialconsumerkey varchar,
+    credencialconsumersecret varchar,
+    credencialfechacreacion timestamptz(3) NOT NULL DEFAULT now(),
+    credencialfechamodificacion timestamptz(3) NOT NULL DEFAULT now(),
+    credencialactiva boolean,
+    CONSTRAINT credencial_pkey PRIMARY KEY (credencialid),
+    CONSTRAINT credenciales_ukey UNIQUE(credencialusuario,credencialconsumerkey,credencialconsumersecret)
+);
+
+create or replace procedure insertarCredencial(nombre varchar,consumerkey varchar,consumerSecret varchar)
+language plpgsql
+as $$
+
+begin
+	INSERT INTO credenciales(credencialusuario, credencialconsumerkey, credencialconsumersecret,clientefechacreacion) VALUES(nombre,consumerkey,consumersecret,false,now()); 
+end; $$  
+
+CREATE OR REPLACE FUNCTION buscar_credencial(usuario varchar) RETURNS varchar AS $$
+
+        BEGIN
+
+		 SELECT * FROM credenciales WHERE credenciales.credencialesusuario = usuario;
+
+		IF NOT FOUND THEN
+			RAISE 'No se encontro registro';
+		END IF;	
+                
+        END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION buscar_credencial() returns SETOF credenciales AS $$
+
+        DECLARE
+		reg RECORD;
+	BEGIN
+		FOR REG IN SELECT * FROM credenciales LOOP RETURN NEXT reg;
+		END LOOP;      
+	END	
+$$ LANGUAGE plpgsql;
+
+create or replace function insertarCredencial(nombre varchar,consumerkey varchar,consumerSecret varchar) RETURNS integer
+AS
+$BODY$
+	BEGIN
+	 INSERT INTO credenciales(credencialusuario, credencialconsumerkey, credencialconsumersecret,clientefechacreacion) VALUES(nombre,consumerkey,consumersecret,false,now()); 
+	 RETURN 1;
+	END	
+$BODY$ language 'plpgsql'
