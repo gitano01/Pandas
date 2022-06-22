@@ -37,13 +37,14 @@ public class demoCredencialesController {
 			
 			credenciales = servCrede.generaCredencial(usuario);
 			
+			System.out.println(credenciales);
 			
-			if(credenciales == "1") {
+			if(credenciales.equals("{returnvalue=1}")) {
 			apiResponse = new Response (200,"Operacion Exitosa", "La credencial se ha creado con exitos");
 			
 			return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.OK);
 			}else{
-				apiResponse = new ErrorResponse(400,"Operacion Fallida","http://efevserv.com/BadRequest", "problemas al generar credenciales");
+				apiResponse = new ErrorResponse(400,"Operacion Fallida","http://efevserv.com/BadRequest", credenciales);
 				
 			return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.BAD_REQUEST);
 			}

@@ -36,28 +36,28 @@ public class FuncionesGenericas {
 		return Base64.getEncoder().encodeToString(sb.toString().getBytes());
 	}
 
-	
 	public String asignarCredenciales(CredencialesGeneradas credenciales) {
 
 		String result = null;
 		List<CredencialesResponse> lista = obtenerCredenciales();
+		if (lista != null) {
 
-		for (CredencialesResponse elem : lista) {
+			for (CredencialesResponse elem : lista) {
 
-			if (credenciales.getUsuario() == elem.getCredencialUsuario()) {
+				if (credenciales.getUsuario().equals(elem.getCredencialUsuario())) {
 
-				return "El usuario ingresado ya se encuentra registrado en la base de datos";
-			} else {
-
-				call = new SimpleJdbcCall(dataSourceConf).withFunctionName("insertarCredencial");
-				MapSqlParameterSource in = new MapSqlParameterSource();
-				in.addValue("usuario", credenciales.getUsuario());
-				in.addValue("contrasenia", credenciales.getContrasenia());
-				in.addValue("credencialconsumerkey", credenciales.getConsumerKey());
-				in.addValue("credencialconsumersecret", credenciales.getConsumerSecret());
-				result = call.execute(in).toString();
+					return "El usuario ingresado ya se encuentra registrado en la base de datos";
+				}
 			}
 		}
+
+		call = new SimpleJdbcCall(dataSourceConf).withFunctionName("insertarCredencial");
+		MapSqlParameterSource in = new MapSqlParameterSource();
+		in.addValue("usuario", credenciales.getUsuario());
+		in.addValue("contrasenia", credenciales.getContrasenia());
+		in.addValue("consumerkey", credenciales.getConsumerKey());
+		in.addValue("consumersecret", credenciales.getConsumerSecret());
+		result = call.execute(in).toString();
 
 		return result;
 
