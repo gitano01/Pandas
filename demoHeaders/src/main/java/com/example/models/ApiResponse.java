@@ -5,15 +5,9 @@ public class ApiResponse {
 	protected int codigo;
 	protected String mensaje;
 	
-	
-	
-	
 	public ApiResponse(int codigo,String mensaje) {
-		
 		this.codigo = codigo;
 		this.mensaje = mensaje;
-
-
 	}
 	
 	public int getCodigo() {
@@ -29,7 +23,5 @@ public class ApiResponse {
 	}
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
-	}	
-	
-
+	}
 }

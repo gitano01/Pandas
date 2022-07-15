@@ -16,7 +16,6 @@ rglvakmlwbwxkcmoivvf
 		create table credenciales(
     credencialid serial,
     credencialusuario varchar,
-    credencialpassword varchar,
     credencialconsumerkey varchar,
     credencialconsumersecret varchar,
     credencialfechacreacion timestamptz(3) NOT NULL DEFAULT now(),
@@ -56,23 +55,3 @@ CREATE OR REPLACE FUNCTION buscar_credencial() returns SETOF credenciales AS $$
 		END LOOP;      
 	END	
 $$ LANGUAGE plpgsql;
-
-create or replace function insertarCredencial(nombre varchar,consumerkey varchar,consumerSecret varchar) RETURNS integer
-AS
-$BODY$
-	BEGIN
-	 INSERT INTO credenciales(credencialusuario, credencialconsumerkey, credencialconsumersecret,clientefechacreacion) VALUES(nombre,consumerkey,consumersecret,false,now()); 
-	 RETURN 1;
-	END	
-$BODY$ language 'plpgsql'
-
-
-
-CREATE OR REPLACE FUNCTION getcredenciales() RETURNS table (credencialid int, credencialusuario varchar,credencialpassword varchar, credencialconsumerkey varchar, credencialconsumersecret varchar, credencialfechacreacion timestamptz(3),credencialfechamodificacion timestamptz(3),credencialactiva boolean)
-AS $$
-
-       
-	BEGIN
-		return query SELECT * FROM credenciales;
-	end;$$ 
-LANGUAGE plpgsql;

@@ -3,63 +3,65 @@ package com.example.models;
 public class CredencialesResponse {
 	
 	private Long credencialid;
-	private String credencialUsuario;
-	private String credencialPassword;
-	private String credencialConsumerKey;
-	private String credencialConsumerSecret;
-	private String credencialFechaCreacion;
-	private String credencialFechaModificacion;
-	private Boolean credenciaActiva;
-	
-
+	private String credencialusuario;
+	private String credencialconsumerkey;
+	private String credencialconsumersecret;
+	private String credencialfechacreacion;
+	private String credencialfechamodificacion;
+	private Boolean credenciaactiva;
 	public Long getCredencialid() {
 		return credencialid;
 	}
 	public void setCredencialid(Long credencialid) {
 		this.credencialid = credencialid;
 	}
-	public String getCredencialUsuario() {
-		return credencialUsuario;
+	public String getCredencialusuario() {
+		return credencialusuario;
 	}
-	public void setCredencialUsuario(String credencialUsuario) {
-		this.credencialUsuario = credencialUsuario;
+	public void setCredencialusuario(String credencialusuario) {
+		this.credencialusuario = credencialusuario;
+	}
+	public String getCredencialconsumerkey() {
+		return credencialconsumerkey;
+	}
+	public void setCredencialconsumerkey(String credencialconsumerkey) {
+		this.credencialconsumerkey = credencialconsumerkey;
+	}
+	public String getCredencialconsumersecret() {
+		return credencialconsumersecret;
+	}
+	public void setCredencialconsumersecret(String credencialconsumersecret) {
+		this.credencialconsumersecret = credencialconsumersecret;
+	}
+	public String getCredencialfechacreacion() {
+		return credencialfechacreacion;
+	}
+	public void setCredencialfechacreacion(String credencialfechacreacion) {
+		this.credencialfechacreacion = credencialfechacreacion;
+	}
+	public String getCredencialfechamodificacion() {
+		return credencialfechamodificacion;
+	}
+	public void setCredencialfechamodificacion(String credencialfechamodificacion) {
+		this.credencialfechamodificacion = credencialfechamodificacion;
+	}
+	public Boolean getCredenciaactiva() {
+		return credenciaactiva;
+	}
+	public void setCredenciaactiva(Boolean credenciaactiva) {
+		this.credenciaactiva = credenciaactiva;
 	}
 	
-	public String getCredencialPassword() {
-		return credencialPassword;
+	@Override
+	public String toString() {
+		return "CredencialesResponse [credencialid=" + credencialid + ", credencialusuario=" + credencialusuario
+				+ ", credencialconsumerkey=" + credencialconsumerkey + ", credencialconsumersecret="
+				+ credencialconsumersecret + ", credencialfechacreacion=" + credencialfechacreacion
+				+ ", credencialfechamodificacion=" + credencialfechamodificacion + ", credenciaactiva="
+				+ credenciaactiva + "]";
 	}
-	public void setCredencialPassword(String credencialPassword) {
-		this.credencialPassword = credencialPassword;
-	}
-	public String getCredencialConsumerKey() {
-		return credencialConsumerKey;
-	}
-	public void setCredencialConsumerKey(String credencialConsumerKey) {
-		this.credencialConsumerKey = credencialConsumerKey;
-	}
-	public String getCredencialConsumerSecret() {
-		return credencialConsumerSecret;
-	}
-	public void setCredencialConsumerSecret(String credencialConsumerSecret) {
-		this.credencialConsumerSecret = credencialConsumerSecret;
-	}
-	public String getCredencialFechaCreacion() {
-		return credencialFechaCreacion;
-	}
-	public void setCredencialFechaCreacion(String credencialFechaCreacion) {
-		this.credencialFechaCreacion = credencialFechaCreacion;
-	}
-	public String getCredencialFechaModificacion() {
-		return credencialFechaModificacion;
-	}
-	public void setCredencialFechaModificacion(String credencialFechaModificacion) {
-		this.credencialFechaModificacion = credencialFechaModificacion;
-	}
-	public Boolean getCredenciaActiva() {
-		return credenciaActiva;
-	}
-	public void setCredenciaActiva(Boolean credenciaActiva) {
-		this.credenciaActiva = credenciaActiva;
-	}	
+	
+
+	
 
 }
