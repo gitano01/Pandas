@@ -21,7 +21,7 @@ public class JwtIO {
 	private String SECRET;
 	@Value("${efv.jwt.timezone:UTC}")
 	private String TIMEZONE;
-	@Value("${efv.jwt.token.expires-in:3600}")
+	@Value("${efv.jwt.token.expires-in:1800}")
 	private int EXPIRE_IN;
 	@Value("${efv.jwt.issuer:none}")
 	private String ISSUER;
@@ -43,7 +43,10 @@ public class JwtIO {
 	}
 	
 	public boolean validateToken(String encode){
-		return false;
+		
+		JWT jwt = jwt(encode);
+		
+		return jwt.isExpired();
 	}
 	
 	public String getPayload(String encodedJWT) {

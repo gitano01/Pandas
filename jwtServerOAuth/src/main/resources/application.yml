@@ -10,8 +10,8 @@ efv:
     issuer: 'https://www.efectivale.com.mx/'
     token:
       auth:
-        path: /v1/oauth/client_credential/accesstoken
-      secret: and0U2VydmVyVG9rZW5QYXNz
+        path: "/v1/oauth/client_credential/accesstoken"
+      secret: "and0U2VydmVyVG9rZW5QYXNz"
       expires-in: 1800
-      excluded:
-        path:"/v1/multi,/v1/otherExcluded"  
+    excluded:
+      path: "/v1/multi,/v1/otherExcluded"  
