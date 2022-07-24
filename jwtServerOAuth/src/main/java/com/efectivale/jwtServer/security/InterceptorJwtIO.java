@@ -28,10 +28,10 @@ public class InterceptorJwtIO implements HandlerInterceptor {
 		String url =  request.getRequestURI();
 		
 		if(url.equals(AUTH_PATH)||excluded(url)){
-			
+			validate = true;
 		}
 		
-		return true;
+		return validate;
 	}
 	
 	private boolean excluded(String path){
