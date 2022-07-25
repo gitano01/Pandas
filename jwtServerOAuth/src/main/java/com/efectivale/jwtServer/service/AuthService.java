@@ -23,7 +23,7 @@ public class AuthService {
 		
 		JwtResponse jwt = JwtResponse.builder()
 				.tokenType("bearer")
-				.accessToken(jwtIO.generateToken("Hola Mundo desde AuthService"))
+				.accessToken(jwtIO.generateToken("/v1/oauth/client_credential/accesstoken"))
 				.issuedAt(dateUtils.getDateMillis() + "")
 				.clienteId(clientId)
 				.expiresIn(EXPIRES_IN)

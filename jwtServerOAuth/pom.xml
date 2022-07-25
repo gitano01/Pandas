@@ -57,8 +57,14 @@
 			<artifactId>fusionauth-jwt</artifactId>
 			<version>5.2.0</version>
 		</dependency>
-		 
-
+		<!-- dependencia para testing del aplicativo -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<version>2.5.0</version>
+		</dependency>
+		<!-- dependencia para testing del aplicativo -->
 	</dependencies>
 
 	<build>
