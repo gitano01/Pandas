@@ -26,8 +26,17 @@ public class AuthController {
 
 	@PostMapping(path = "oauth/client_credential/accesstoken", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Object> login(@RequestBody MultiValueMap<String, String> paramMap,
-			@RequestParam("grant_type") String grantType) throws APIJwtUnauthorized{
+			@RequestParam("grant_type") String grantType) throws APIJwtUnauthorized,Exception{
 			validator.validate(paramMap, grantType);
-			return ResponseEntity.ok(service.login(paramMap.getFirst("client_id"), paramMap.getFirst("client_secret")));
+			return ResponseEntity.ok(service.login(paramMap.getFirst("username"), paramMap.getFirst("password"), paramMap.getFirst("servicio")));
 	}
+	
+	@PostMapping(path = "oauth/validateaccesstoken", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<Object> validate(@RequestBody MultiValueMap<String, String> paramMap,
+			@RequestParam("grant_type") String grantType) throws APIJwtUnauthorized,Exception{
+			validator.validate(paramMap, grantType);
+			return ResponseEntity.ok(service.login(paramMap.getFirst("username"), paramMap.getFirst("password"), paramMap.getFirst("servicio")));
+	}
+	
+	
 }

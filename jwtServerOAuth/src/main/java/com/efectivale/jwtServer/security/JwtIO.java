@@ -4,6 +4,8 @@ import java.time.ZonedDateTime;
 import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.efectivale.jwtServer.dto.DataUser;
 import com.efectivale.jwtServer.utils.GsonUtils;
 import io.fusionauth.jwt.Signer;
 import io.fusionauth.jwt.Verifier;
@@ -23,7 +25,7 @@ public class JwtIO {
 	@Value("${efv.jwt.issuer:none}")
 	private String ISSUER;
 	
-	public String generateToken(Object src){
+	public String generateToken(DataUser src){
 		
 		String subject = GsonUtils.serialize(src);
 		//Construye el HMAC usando SHA256

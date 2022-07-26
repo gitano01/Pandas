@@ -17,8 +17,8 @@ public class AuthValidator {
 		if(grantType.isEmpty()|| !grantType.equals(CLIENT_CREDENTIALS)){
 			message("El tipo de credenciales no es válido");
 		}
-		if(Objects.isNull(paramMap) || paramMap.getFirst("client_id").isEmpty() || paramMap.getFirst("client_secret").isEmpty()) {
-			message("client_id y/o cliend_secret son incorrectos");
+		if(Objects.isNull(paramMap) || paramMap.getFirst("username").isEmpty() || paramMap.getFirst("password").isEmpty()) {
+			message("usernamey/o password son incorrectos");
 		}
 		
 	}
