@@ -1,4 +1,4 @@
-package com.efectivale.jwtServer.exceptions;
+package com.efectivale.jwtServer.dto;
 
 import lombok.Data;
 

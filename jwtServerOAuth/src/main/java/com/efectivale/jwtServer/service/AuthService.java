@@ -10,14 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
+
 import com.efectivale.jwtServer.dto.DataUser;
 import com.efectivale.jwtServer.dto.JwtResponse;
 import com.efectivale.jwtServer.security.JwtIO;
 import com.efectivale.jwtServer.utils.DateUtils;
-import com.google.gson.Gson;
 
 import jdbcconfig.JdbcConfig;
 
@@ -42,40 +41,33 @@ public class AuthService {
 
 		// Ir a la base datos
 		DataUser dUser = null;
+		JwtResponse jwt = null;
 		try {
 	String sql = "SELECT  * FROM tok_usuario_app_keys('" + username +"', '" + password +"','" + servicio+ "') ";
 
 			List<DataUser> datosUsuario = this.jdbcTemplate.query(sql, new RowMapper<DataUser>() {
 				@Override
 				public DataUser mapRow(ResultSet rs, int i) throws SQLException {
-					DataUser datos = new DataUser();
-					datos.setRs_username(rs.getString("rs_username"));
-					datos.setRs_password(rs.getString("rs_password"));
-					datos.setRs_credencialid(rs.getInt("rs_credencialid"));
-					datos.setRs_consumerkey(rs.getString("rs_consumerkey"));
-					datos.setRs_consumersecret(rs.getString("rs_consumersecret"));
+					DataUser datos = new DataUser();					
 					datos.setRs_servicio(rs.getString("rs_servicio"));
 					datos.setRs_url(rs.getString("rs_url"));
 					return datos;
 				}
 			});
 			if(datosUsuario.size() == 0) {
-				throw new Exception("No existen registros");
+				throw new SQLException("No existen registros");
 			}else {
 				for(DataUser usr: datosUsuario) {
 					dUser = usr;
 				}
 			}
+		} catch (SQLException e) {			
 			
-			JwtResponse jwt = JwtResponse.builder().tokenType("bearer")
+			throw new SQLException(e.getMessage());
+		}
+			jwt = JwtResponse.builder().tokenType("bearer")
 					.accessToken(jwtIO.generateToken(dUser)).issuedAt(dateUtils.getDateMillis() + "")
 					.clienteId(username).expiresIn(EXPIRES_IN).build();
-
 			return jwt;
-
-		} catch (Exception e) {
-
-		}
-		return null;
 	}
 }

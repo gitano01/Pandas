@@ -2,11 +2,13 @@ package com.efectivale.jwtServer.security;
 
 import java.time.ZonedDateTime;
 import java.util.TimeZone;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.efectivale.jwtServer.dto.DataUser;
 import com.efectivale.jwtServer.utils.GsonUtils;
+
 import io.fusionauth.jwt.Signer;
 import io.fusionauth.jwt.Verifier;
 import io.fusionauth.jwt.domain.JWT;
@@ -36,13 +38,13 @@ public class JwtIO {
 		JWT jwt = new JWT().setIssuer(ISSUER)
 				.setIssuedAt(ZonedDateTime.now(tz.toZoneId()))
 				.setSubject(subject)
-				.setExpiration(zdt);
-		
+				.setExpiration(zdt);		
 		return jwt.getEncoder().encode(jwt, signer);
 	}
 	
 	public boolean validateToken(String encode){		
 		JWT jwt = jwt(encode);		
+		System.out.println(getPayload(encode));
 		return jwt.isExpired();
 	}
 	
@@ -52,10 +54,11 @@ public class JwtIO {
 		return jwt.subject;
 	}
 	
-	private JWT jwt(String encodedJWT) {
-		
+	private  JWT jwt(String encodedJWT) {		
 		Verifier verifier = HMACVerifier.newVerifier(SECRET);		
-		return JWT.getDecoder().decode(encodedJWT, verifier);
+		JWT jwt = JWT.getDecoder().decode(encodedJWT, verifier);
+		
+		return jwt;
 	}
 
 	
