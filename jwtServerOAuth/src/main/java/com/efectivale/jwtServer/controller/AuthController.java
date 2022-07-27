@@ -1,9 +1,5 @@
 package com.efectivale.jwtServer.controller;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,17 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.efectivale.jwtServer.dto.ApiJwtResponse;
 import com.efectivale.jwtServer.dto.ApiResponse;
-import com.efectivale.jwtServer.dto.DataUser;
 import com.efectivale.jwtServer.dto.ErrorResponse;
 import com.efectivale.jwtServer.dto.JwtResponse;
 import com.efectivale.jwtServer.exceptions.APIJwtUnauthorized;
 import com.efectivale.jwtServer.service.AuthService;
 import com.efectivale.jwtServer.utils.ConstantesJwt;
-import com.efectivale.jwtServer.utils.GsonUtils;
 import com.efectivale.jwtServer.validator.AuthValidator;
-import com.google.gson.Gson;
 
 @RestController
 @RequestMapping(path = "v1")
