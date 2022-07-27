@@ -37,10 +37,8 @@ public class AuthController {
 			ResponseEntity<ApiJwtResponse> apiResponse = null;
 			ApiJwtResponse response = null;
 			try {
-				jwt = service.login(paramMap.getFirst(ConstantesJwt.Params.USERNAME), paramMap.getFirst(ConstantesJwt.Params.PASSWORD), paramMap.getFirst(ConstantesJwt.Params.SERVICE));
-				
-				response = new ApiResponse(200,"Operación Exitosa",jwt);
-				
+				jwt = service.login(paramMap.getFirst(ConstantesJwt.Params.USERNAME), paramMap.getFirst(ConstantesJwt.Params.PASSWORD), paramMap.getFirst(ConstantesJwt.Params.SERVICE));			
+				response = new ApiResponse(200,"Operación Exitosa",jwt);				
 				apiResponse = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.OK);
 				
 			}catch(Exception e) {
@@ -54,9 +52,6 @@ public class AuthController {
 						response = new ErrorResponse(500,"Operación fallida",e.getMessage());					
 						apiResponse = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.INTERNAL_SERVER_ERROR);
 						}
-					
-				
-				
 			}	
 			return apiResponse;			
 	}

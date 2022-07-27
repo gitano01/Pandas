@@ -49,6 +49,7 @@ public class AuthService {
 				@Override
 				public DataUser mapRow(ResultSet rs, int i) throws SQLException {
 					DataUser datos = new DataUser();					
+					datos.setRs_consumersecret(rs.getString("rs_consumersecret"));
 					datos.setRs_servicio(rs.getString("rs_servicio"));
 					datos.setRs_url(rs.getString("rs_url"));
 					return datos;
