@@ -1,0 +1,14 @@
+server:
+  port: 8090
+  error:
+    include-stacktrace: never
+victor:
+  jwt:
+    security:
+      enabled: true
+    timezone: America/Mexico
+    issuer: 'https://www.efectivale.com.mx/'
+    token:
+      secret: "and0U2VydmVyVG9rZW5QYXNz"
+    excluded:
+        path: "/v1/multi,/v1/otherExcluded"     
