@@ -17,6 +17,8 @@ import com.efectivale.jwtServer.dto.DataUser;
 import com.efectivale.jwtServer.dto.JwtResponse;
 import com.efectivale.jwtServer.security.JwtIO;
 import com.efectivale.jwtServer.utils.DateUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import jdbcconfig.JdbcConfig;
 
@@ -48,8 +50,10 @@ public class AuthService {
 			List<DataUser> datosUsuario = this.jdbcTemplate.query(sql, new RowMapper<DataUser>() {
 				@Override
 				public DataUser mapRow(ResultSet rs, int i) throws SQLException {
-					DataUser datos = new DataUser();					
-					datos.setRs_consumersecret(rs.getString("rs_consumersecret"));
+					DataUser datos = new DataUser();
+					Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+					String secret = gson.toJson(rs.getString("rs_consumersecret"));
+					datos.setRs_consumersecret(secret);
 					datos.setRs_servicio(rs.getString("rs_servicio"));
 					datos.setRs_url(rs.getString("rs_url"));
 					return datos;

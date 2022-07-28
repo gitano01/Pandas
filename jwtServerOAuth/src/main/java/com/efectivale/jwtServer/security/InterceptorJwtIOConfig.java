@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Component
 public class InterceptorJwtIOConfig implements WebMvcConfigurer {
 
-		@Value("${efv.jwt.security.enabled:false}")
+		@Value("${efv.jwt.security.enabled:true}")
 		private boolean securityEnabled;
 		
 		@Autowired
