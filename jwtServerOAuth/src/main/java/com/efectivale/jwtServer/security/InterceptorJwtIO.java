@@ -18,8 +18,6 @@ public class InterceptorJwtIO implements HandlerInterceptor {
 	@Value("#{'${efv.jwt.excluded.path}'.split(',')}")
 	private List<String> excluded;
 	
-	@Autowired
-	private JwtIO jwtIO;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -29,14 +27,7 @@ public class InterceptorJwtIO implements HandlerInterceptor {
 		
 		if(uri.equals(AUTH_PATH)||excluded(uri)){
 			validate = true;
-		}
-		if(!validate && request.getHeader("Authorization") != null && !request.getHeader("Authorization").isEmpty()){
-			
-			String token = request.getHeader("Authorization").replace("Bearer ", "");
-			validate = !jwtIO.validateToken(token);
-		
-		}
-		
+		}		
 		if(!validate) {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 		}				

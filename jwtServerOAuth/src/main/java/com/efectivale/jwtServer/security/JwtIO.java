@@ -27,11 +27,11 @@ public class JwtIO {
 	@Value("${efv.jwt.issuer:none}")
 	private String ISSUER;
 	
-	public String generateToken(DataUser src){
+	public String generateToken(Object src, String secretKey){
 		
 		String subject = GsonUtils.serialize(src);
 		//Construye el HMAC usando SHA256
-		Signer signer = HMACSigner.newSHA256Signer(SECRET);
+		Signer signer = HMACSigner.newSHA256Signer(secretKey);
 		TimeZone tz = TimeZone.getTimeZone(TIMEZONE);
 		ZonedDateTime zdt = ZonedDateTime.now(tz.toZoneId()).plusSeconds(EXPIRE_IN);
 		
@@ -42,24 +42,21 @@ public class JwtIO {
 		return jwt.getEncoder().encode(jwt, signer);
 	}
 	
-	public boolean validateToken(String encode){		
-		JWT jwt = jwt(encode);		
-		System.out.println(getPayload(encode));
+	public boolean validateToken(String encode,String secretKey){		
+		JWT jwt = jwt(encode,secretKey);			
 		return jwt.isExpired();
 	}
 	
-	public String getPayload(String encodedJWT) {
+	public String getPayload(String encodedJWT, String secretKey) {
 		
-		JWT jwt = jwt(encodedJWT);
+		JWT jwt = jwt(encodedJWT, secretKey);
 		return jwt.subject;
 	}
 	
-	private  JWT jwt(String encodedJWT) {		
-		Verifier verifier = HMACVerifier.newVerifier(SECRET);		
+	private  JWT jwt(String encodedJWT,String secretKey) {		
+		Verifier verifier = HMACVerifier.newVerifier(secretKey);		
 		JWT jwt = JWT.getDecoder().decode(encodedJWT, verifier);
 		
 		return jwt;
 	}
-
-	
 }

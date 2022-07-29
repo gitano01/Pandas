@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.efectivale.jwtServer.dto.DataUser;
 import com.efectivale.jwtServer.dto.JwtResponse;
+import com.efectivale.jwtServer.dto.ServicePaths;
 import com.efectivale.jwtServer.security.JwtIO;
 import com.efectivale.jwtServer.utils.DateUtils;
 import com.google.gson.Gson;
@@ -42,7 +43,7 @@ public class AuthService {
 	public JwtResponse login(String username, String password, String servicio)  throws Exception{
 
 		// Ir a la base datos
-		DataUser dUser = null;
+		DataUser dUser = null;		
 		JwtResponse jwt = null;
 		try {
 	String sql = "SELECT  * FROM tok_usuario_app_keys('" + username +"', '" + password +"','" + servicio+ "') ";
@@ -65,14 +66,21 @@ public class AuthService {
 				for(DataUser usr: datosUsuario) {
 					dUser = usr;
 				}
+				
+				ServicePaths serviceApp = new ServicePaths();;
+				serviceApp.setService(dUser.getRs_servicio());
+				serviceApp.setUrls(dUser.getRs_url());
+				
+				jwt = JwtResponse.builder().tokenType("bearer")
+						.accessToken(jwtIO.generateToken(serviceApp, dUser.getRs_consumersecret()))
+						.issuedAt(dateUtils.getDateMillis() + "")
+						.clienteId(username).expiresIn(EXPIRES_IN).build();
+				return jwt;
 			}
 		} catch (SQLException e) {			
 			
 			throw new SQLException(e.getMessage());
 		}
-			jwt = JwtResponse.builder().tokenType("bearer")
-					.accessToken(jwtIO.generateToken(dUser)).issuedAt(dateUtils.getDateMillis() + "")
-					.clienteId(username).expiresIn(EXPIRES_IN).build();
-			return jwt;
+			
 	}
 }
