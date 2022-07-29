@@ -24,18 +24,10 @@ public class InterceptorJwtIO implements HandlerInterceptor {
 			throws Exception {
 		
 		boolean validate = false;
-		String uri =  request.getRequestURI();
-		System.out.println(uri);
 		
-		
-		if(excluded(uri)){
-			validate = true;
-		}
-		if(!validate && request.getHeader("Authorization") != null && !request.getHeader("Authorization").isEmpty()){
-			
+		if(request.getHeader("Authorization") != null && !request.getHeader("Authorization").isEmpty()){
 			String token = request.getHeader("Authorization").replace("Bearer ", "");
 			validate = !jwtIO.validateToken(token);
-		
 		}
 		
 		if(!validate) {
@@ -43,19 +35,5 @@ public class InterceptorJwtIO implements HandlerInterceptor {
 		}				
 		
 		return validate;
-	}
-	
-	private boolean excluded(String path){
-		boolean result = false;
-		
-		for(String exc: excluded){		
-			
-			if(!exc.equals("#")&&exc.equals(path)) {
-				result = true;
-			}
-		}		
-		return result;
-	}
-
-	
+	}		
 }
