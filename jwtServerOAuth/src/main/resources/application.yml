@@ -11,7 +11,6 @@ efv:
     token:
       auth:
         path: "/v1/oauth/client_credential/accesstoken"
-      secret: "and0U2VydmVyVG9rZW5QYXNz"
       expires-in: 360
     excluded:
       path: "/v1/multi,/v1/otherExcluded"  

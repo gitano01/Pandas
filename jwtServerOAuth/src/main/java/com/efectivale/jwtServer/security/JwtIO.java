@@ -2,13 +2,9 @@ package com.efectivale.jwtServer.security;
 
 import java.time.ZonedDateTime;
 import java.util.TimeZone;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.efectivale.jwtServer.dto.DataUser;
 import com.efectivale.jwtServer.utils.GsonUtils;
-
 import io.fusionauth.jwt.Signer;
 import io.fusionauth.jwt.Verifier;
 import io.fusionauth.jwt.domain.JWT;
@@ -18,8 +14,8 @@ import io.fusionauth.jwt.hmac.HMACVerifier;
 @Component
 public class JwtIO {
 	
-	@Value("${efv.jwt.token.secret:secret}")
-	private String SECRET;
+//	@Value("${efv.jwt.token.secret:secret}")
+//	private String SECRET;
 	@Value("${efv.jwt.timezone:UTC}")
 	private String TIMEZONE;
 	@Value("${efv.jwt.token.expires-in:1800}")
@@ -55,8 +51,7 @@ public class JwtIO {
 	
 	private  JWT jwt(String encodedJWT,String secretKey) {		
 		Verifier verifier = HMACVerifier.newVerifier(secretKey);		
-		JWT jwt = JWT.getDecoder().decode(encodedJWT, verifier);
-		
+		JWT jwt = JWT.getDecoder().decode(encodedJWT, verifier);		
 		return jwt;
 	}
 }
