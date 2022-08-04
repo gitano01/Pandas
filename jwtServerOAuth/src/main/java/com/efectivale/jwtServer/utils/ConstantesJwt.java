@@ -4,8 +4,9 @@ package com.efectivale.jwtServer.utils;
 public  class ConstantesJwt {
 	
 	public static class Oauth{
+		public static final String VERSION = "v1";
 		public static final   String GENERATION_TOKEN = "oauth/client_credential/accesstoken";
-		public static final  String VALIDATION_TOKEN = "oauth/validateaccesstoken";
+		
 	
 		public static class errorsDB{
 			
@@ -32,5 +33,15 @@ public  class ConstantesJwt {
 		public static final String PASSWORD = "password";
 		public static final String SERVICE = "servicio" ;		
 	}
+	
+	public static class Swagger{
+		   public static final String TITLE = "JWT Token Server Auth";
+		   public static final String DESCRIPTION = "Documentación para la autenticacion de usuarios en aplicaciones de efectivale mediante tokens";
+		   public static final String VERSION = "0.0.1";
+		   public static final String LICENSE = "Apache 2.0";
+		   public static final String LICENSESURL = "https://www.apache.org/licenses/LICENSE-2.0\"";   
+	}
+	
+	
 	
 }

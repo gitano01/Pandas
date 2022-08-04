@@ -17,7 +17,7 @@ import com.efectivale.jwtServer.utils.ConstantesJwt;
 import com.efectivale.jwtServer.validator.AuthValidator;
 
 @RestController
-@RequestMapping(path = "v1")
+@RequestMapping(path = ConstantesJwt.Oauth.VERSION)
 public class AuthController {	
 	@Autowired
 	private AuthService service;

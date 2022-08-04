@@ -2,15 +2,19 @@ server:
   port: 8081
   error:
     include-stacktrace: never
+  servlet:
+    context-path: "/api"  
+spring:
+   mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER     
 efv:
   jwt:
-    security:
-      enabled: true
     timezone: America/Mexico
     issuer: 'https://www.efectivale.com.mx/'
     token:
       auth:
-        path: "/v1/oauth/client_credential/accesstoken"
+        path: "/api/v1/oauth/client_credential/accesstoken"
       expires-in: 360
     excluded:
-      path: "/v1/multi,/v1/otherExcluded"  
+      path: "/api/v1/multi,/api/v1/otherExcluded"  

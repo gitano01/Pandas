@@ -3,24 +3,19 @@ package com.efectivale.jwtServer.utils;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import com.efectivale.jwtServer.dto.DataUser;
+import com.efectivale.jwtServer.jdbcconfig.JdbcConfig;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import jdbcconfig.JdbcConfig;
+
 
 
 public class ConexionBD {
-
-
-	
 	private JdbcConfig jdbcConfig = new JdbcConfig();
 	DataSource dataSourceConf = jdbcConfig.myPgSqlDataSource();
 	JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSourceConf);
