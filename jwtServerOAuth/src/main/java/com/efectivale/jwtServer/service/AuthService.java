@@ -46,7 +46,7 @@ public class AuthService {
 					.accessToken(jwtIO.generateToken(api, dUser.getRs_consumersecret()))
 					.issuedAt(dateUtils.getDateMillis() + "")
 					.clienteId(username).expiresIn(EXPIRES_IN).build();			
-			response = new ApiResponse(200,"Operación Exitosa",jwt);
+			response = new ApiResponse(ConstantesJwt.Codes.OK,ConstantesJwt.ApiResponses.EXIT,jwt);
 			apiResponse  = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.OK);
 		}catch(Exception e) {
 			
@@ -66,39 +66,39 @@ public class AuthService {
 			
 			switch (op) {
 			case 1:
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.USERNAMEPASSWORD_ERROR );
+				response = new ErrorResponse(ConstantesJwt.Codes.BAD_REQUEST,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.USERNAMEPASSWORD_ERROR );
 				apiResponse  =  new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
 				break;
 			case 2: 
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.USERNAMEACTIVE_ERROR );
-				apiResponse  =  new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.USERNAMEACTIVE_ERROR );
+				apiResponse  =  new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
 				break;
 			case 3: 
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.USERNAME_NOCREDENTIALS  );
-				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.USERNAME_NOCREDENTIALS  );
+				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
 				break;
 			case 4:
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.CREDENTIAL_USER_ACTIVE_ERROR );
-				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.CREDENTIAL_USER_ACTIVE_ERROR );
+				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
 				break;
 			case 5:
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.CREDENTIAL_API_ACTIVE_ERROR );
-				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.CREDENTIAL_API_ACTIVE_ERROR );
+				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
 				break;
 			case 6: 
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.API_NOTFOUND);
-				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				response = new ErrorResponse(ConstantesJwt.Codes.NOT_FOUND,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.API_NOTFOUND);
+				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.NOT_FOUND);
 				break;
 			case 7: 
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.API_ACTIVE_ERROR );
-				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.API_ACTIVE_ERROR );
+				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
 				break;
 			case 8:
-				response = new ErrorResponse(400,"Operación Fallida", ConstantesJwt.Oauth.errorsDB.API_NOCREDENTIALS );
-				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.API_NOCREDENTIALS );
+				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
 				break;
 			default:
-				response = new ErrorResponse(500,"Operación Fallida", e.getMessage());
+				response = new ErrorResponse(ConstantesJwt.Codes.INTERNAL_ERROR,ConstantesJwt.ApiResponses.FAILURE, e.getMessage());
 				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.INTERNAL_SERVER_ERROR);
 				break;
 			}

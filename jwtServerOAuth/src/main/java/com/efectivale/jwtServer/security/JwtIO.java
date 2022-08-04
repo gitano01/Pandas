@@ -35,7 +35,7 @@ public class JwtIO {
 				.setIssuedAt(ZonedDateTime.now(tz.toZoneId()))
 				.setSubject(subject)
 				.setExpiration(zdt);		
-		return jwt.getEncoder().encode(jwt, signer);
+		return JWT.getEncoder().encode(jwt, signer);
 	}
 	
 	public boolean validateToken(String encode,String secretKey){		

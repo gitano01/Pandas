@@ -58,12 +58,6 @@
 			<version>5.2.0</version>
 		</dependency>
 		<!-- dependencia para testing del aplicativo -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- dependencia para testing del aplicativo -->
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
 			<groupId>org.postgresql</groupId>

@@ -2,43 +2,44 @@ package com.efectivale.jwtServer.validator;
 
 import java.util.Objects;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 
-import com.efectivale.jwtServer.exceptions.APIJwtBadRequest;
-import com.efectivale.jwtServer.exceptions.APIJwtUnauthorized;
+import com.efectivale.jwtServer.dto.ApiJwtResponse;
+import com.efectivale.jwtServer.dto.ErrorResponse;
+import com.efectivale.jwtServer.dto.UserLogin;
+import com.efectivale.jwtServer.utils.ConstantesJwt;
 
 @Component
 public class AuthValidator {
 
-	private static final String CLIENT_CREDENTIALS = "client_credentials";
-	
-	public void validate(MultiValueMap<String,String> paramMap, String grantType) throws APIJwtUnauthorized {
+	public ResponseEntity<ApiJwtResponse> validate( UserLogin user,String grantType){
 		
-		if(grantType.isEmpty()|| !grantType.equals(CLIENT_CREDENTIALS)){
-			messageUnauthorized("El tipo de credenciales no es válido");
+		ApiJwtResponse jwtResponse = null;
+		ResponseEntity<ApiJwtResponse> apiResponse = null;
+		
+		if(grantType.isEmpty() || !grantType.equals(ConstantesJwt.Params.CLIENT_CREDENTIALS)){
+			
+			jwtResponse = new ErrorResponse(ConstantesJwt.Codes.BAD_REQUEST,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.ParamsError.GRANT_TYPE_ERROR );
+			apiResponse = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)jwtResponse,HttpStatus.BAD_REQUEST);
+	   }
+		if(Objects.isNull(user) || (user.getUsername().isEmpty() || user.getUsername() == null ) || (user.getPassword().isEmpty() || user.getPassword() == null )) {
+			jwtResponse = new ErrorResponse(ConstantesJwt.Codes.BAD_REQUEST,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.ParamsError.USER_ERROR );
+			apiResponse = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)jwtResponse,HttpStatus.BAD_REQUEST);
 		}
-		if(Objects.isNull(paramMap) || paramMap.getFirst("username").isEmpty() || paramMap.getFirst("password").isEmpty()) {
-			messageUnauthorized("usernamey/o password son incorrectos");
-		}
+		
+//		if(Objects.isNull(user) || (user.getUsername().isEmpty() || user.getUsername() == null ) || (user.getPassword().isEmpty() || user.getPassword() == null )) {
+//			jwtResponse = new ErrorResponse(ConstantesJwt.Codes.BAD_REQUEST,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.ParamsError.USER_ERROR );
+//			apiResponse = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)jwtResponse,HttpStatus.BAD_REQUEST);
+//		}
+		
+		return apiResponse;
 		
 	}
 	
-	public void validaJwt(String jwt) throws  APIJwtBadRequest{
-		if(jwt.isEmpty() || jwt.equals("")) {
-			messageBadRequest("El parametro JWT no debe estar vacío o nulo");
-		}
-	}
 	
-	private void messageBadRequest(String message) throws APIJwtBadRequest{
-		
-		throw new APIJwtBadRequest(message);
-		
-	}
-	private void messageUnauthorized(String message) throws APIJwtUnauthorized{
-		
-		throw new APIJwtUnauthorized(message);
-		
-	}
+	
+
 	
 }

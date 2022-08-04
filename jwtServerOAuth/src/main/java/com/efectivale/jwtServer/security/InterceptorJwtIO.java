@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -30,8 +28,7 @@ public class InterceptorJwtIO implements HandlerInterceptor {
 		}		
 		if(!validate) {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-		}				
-		
+		}			
 		return validate;
 	}
 	
@@ -39,12 +36,10 @@ public class InterceptorJwtIO implements HandlerInterceptor {
 		boolean result = false;
 		
 		for(String exc: excluded){		
-			
 			if(!exc.equals("#")&&exc.equals(path)) {
 				result = true;
 			}
 		}
-		
 		return result;
 	}
 

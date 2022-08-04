@@ -1,8 +1,5 @@
 package com.efectivale.jwtServer.dto;
 
-import lombok.Data;
-
-@Data
 public class ApiResponse extends ApiJwtResponse {
 
 	private Object response;
@@ -11,6 +8,16 @@ public class ApiResponse extends ApiJwtResponse {
 		super(status,mensaje);
 		this.response = response;
 	}
+
+	public Object getResponse() {
+		return response;
+	}
+
+	public void setResponse(Object response) {
+		this.response = response;
+	}
+	
+	
 	
 	
 	

@@ -1,8 +1,5 @@
 package com.efectivale.jwtServer.dto;
 
-import lombok.Data;
-
-@Data
 public class ErrorResponse  extends ApiJwtResponse {
 
 	
@@ -12,4 +9,15 @@ public class ErrorResponse  extends ApiJwtResponse {
 		super(status,mensaje);
 		this.detalles = detalles;
 	}
+
+	public String getDetalles() {
+		return detalles;
+	}
+
+	public void setDetalles(String detalles) {
+		this.detalles = detalles;
+	}
+	
+	
+	
 }
