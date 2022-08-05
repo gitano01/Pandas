@@ -34,7 +34,8 @@ public class JwtIO {
 		JWT jwt = new JWT().setIssuer(ISSUER)
 				.setIssuedAt(ZonedDateTime.now(tz.toZoneId()))
 				.setSubject(subject)
-				.setExpiration(zdt);		
+				.setExpiration(zdt);
+		
 		return JWT.getEncoder().encode(jwt, signer);
 	}
 	

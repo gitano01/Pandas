@@ -15,6 +15,7 @@ import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.*;
 import com.efectivale.jwtServer.service.AuthService;
 import com.efectivale.jwtServer.utils.ConstantesJwt;
 import com.efectivale.jwtServer.validator.AuthValidator;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -23,7 +24,7 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping(path = ConstantesJwt.Oauth.VERSION)
 
 @RestController
-
+@Api(tags="Auth Token Api")
 public class AuthController {	
 	@Autowired
 	private AuthService service;
@@ -40,13 +41,12 @@ public class AuthController {
 	@ApiOperation(value= ConstantesJwt.Swagger.CONTROLLER_DESCRIPTION, response = ApiJwtResponse.class)
 	@PostMapping(path =  ConstantesJwt.Oauth.GENERATION_TOKEN , produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<ApiJwtResponse> login(@RequestHeader String username, @RequestHeader String password
-			, @RequestParam String api,	@RequestParam String grantType) throws Exception{
+			, @RequestParam String api,	@RequestParam(ConstantesJwt.Params.GRANT_TYPE) String grantType) throws Exception{
 			validator.validate(username,password,grantType);
 			try {
 			return  service.login(username,
 					password, api);
-			}catch(Exception e) {
-				
+			}catch(Exception e) {				
 				throw new Exception(e.getMessage());
 			}
 	}

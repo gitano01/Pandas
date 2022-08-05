@@ -43,9 +43,9 @@ public class AuthService {
 			api.setApi(dUser.getRs_api());
 			api.setCredencialActiva(dUser.getRs_credencial_activa());			
 			jwt = JwtResponse.builder().tokenType("bearer")
-					.accessToken(jwtIO.generateToken(api, dUser.getRs_consumersecret()))
+					.accessToken(jwtIO.generateToken(api, dUser.getRs_consumersecret()))					
 					.issuedAt(dateUtils.getDateMillis() + "")
-					.clienteId(username).expiresIn(EXPIRES_IN).build();			
+					.clienteId(username).expiresIn(EXPIRES_IN).build();	
 			response = new ApiResponse(ConstantesJwt.Codes.OK,ConstantesJwt.ApiResponses.OK,jwt);
 			apiResponse  = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.OK);
 		}catch(Exception e) {
