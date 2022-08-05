@@ -42,19 +42,27 @@ public  class ConstantesJwt {
 		   public static final String VERSION = "0.0.1";
 		   public static final String LICENSE = "Apache 2.0";
 		   public static final String LICENSESURL = "https://www.apache.org/licenses/LICENSE-2.0\"";   
+		   
+		   //Repuestas para la vista del swagger
+		   public static final String OK = "Ok";
+			public static final String BAD_REQUEST = "Petición fallida";
+			public static final String UNAUTHORIZED = "No Autorizado";
+			public static final String NOT_FOUND = "Recurso no encontrado";
+			public static final String INTERNAL_ERROR = "Error Interno del Servidor";
 	}
 	public static class Codes{
 		//codigo de repuesta
-		public static int OK = 200;
-		public static int BAD_REQUEST = 400;
-		public static int UNAUTHORIZED = 401;
-		public static int NOT_FOUND = 404;
-		public static int INTERNAL_ERROR = 500;
+		public static final int OK = 200;
+		public static final int BAD_REQUEST = 400;
+		public static final int UNAUTHORIZED = 401;
+		public static final int NOT_FOUND = 404;
+		public static final int INTERNAL_ERROR = 500;
 		}
 	public static class ApiResponses{		
 		// Strings Respuestas
-		public static String EXIT = "Operación exitosa";
-		public static String FAILURE = "Operación fallida";
+		public static final String OK = "Operación Exitosa";
+		public static final String FAILURE = "Operación fallida";
+		
 		
 	}
 }

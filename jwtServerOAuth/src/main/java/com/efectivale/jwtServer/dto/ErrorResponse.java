@@ -5,8 +5,8 @@ public class ErrorResponse  extends ApiJwtResponse {
 	
 	private String detalles;
 
-	public ErrorResponse(int status, String mensaje,String detalles) {
-		super(status,mensaje);
+	public ErrorResponse(int codigo, String mensaje,String detalles) {
+		super(codigo,mensaje);
 		this.detalles = detalles;
 	}
 

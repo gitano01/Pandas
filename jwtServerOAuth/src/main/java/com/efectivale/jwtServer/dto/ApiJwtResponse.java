@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class ApiJwtResponse {
-	private int  status;
+	private int  codigo;
 	private String mensaje;
-	public ApiJwtResponse(int status, String mensaje) {
+	public ApiJwtResponse(int codigo, String mensaje) {
 		super();
-		this.status = status;
+		this.codigo = codigo;
 		this.mensaje = mensaje;
 	}	
 	}

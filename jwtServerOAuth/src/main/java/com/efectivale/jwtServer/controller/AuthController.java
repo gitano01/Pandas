@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.efectivale.jwtServer.dto.ApiJwtResponse;
+import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.*;
 import com.efectivale.jwtServer.dto.UserLogin;
 
 import com.efectivale.jwtServer.service.AuthService;
@@ -21,16 +22,10 @@ import com.efectivale.jwtServer.validator.AuthValidator;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import mx.com.efectivale.efectivacontigo.utils.ApiUtils.Response;
+
 
 @RequestMapping(path = ConstantesJwt.Oauth.VERSION)
-@ApiResponses(value= {
-		@ApiResponse(code=ConstantesJwt.Codes.OK, message= ConstantesJwt.ApiResponses.EXIT),
-		@ApiResponse(code = ConstantesJwt.Codes.BAD_REQUEST, message = ConstantesJwt.ApiResponses.FAILURE),
-		@ApiResponse(code = ConstantesJwt.Codes.UNAUTHORIZED, message = ConstantesJwt.ApiResponses.FAILURE),
-		@ApiResponse(code = ConstantesJwt.Codes.NOT_FOUND, message = ConstantesJwt.ApiResponses.FAILURE),
-		@ApiResponse(code = ConstantesJwt.Codes.INTERNAL_ERROR, message = ConstantesJwt.ApiResponses..FAILURE) 
-})
+
 @RestController
 
 public class AuthController {	
@@ -39,7 +34,13 @@ public class AuthController {
 	@Autowired
 	private AuthValidator validator;
 	
-	 
+	@ApiResponses(value= {
+			@ApiResponse(code= ConstantesJwt.Codes.OK, message= ConstantesJwt.Swagger.OK, response=ApiJwtMockResponse.class),
+			@ApiResponse(code = ConstantesJwt.Codes.BAD_REQUEST, message = ConstantesJwt.Swagger.BAD_REQUEST,response=Error400.class),
+			@ApiResponse(code = ConstantesJwt.Codes.UNAUTHORIZED, message = ConstantesJwt.Swagger.UNAUTHORIZED,response=Error401.class),
+			@ApiResponse(code = ConstantesJwt.Codes.NOT_FOUND, message = ConstantesJwt.Swagger.NOT_FOUND,response=Error404.class),
+			@ApiResponse(code = ConstantesJwt.Codes.INTERNAL_ERROR, message = ConstantesJwt.Swagger.INTERNAL_ERROR,response=Error500.class) 
+	})
 	@ApiOperation(value= ConstantesJwt.Swagger.CONTROLLER_DESCRIPTION, response = ApiJwtResponse.class)
 	@PostMapping(path =  ConstantesJwt.Oauth.GENERATION_TOKEN , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<ApiJwtResponse> login(@RequestBody UserLogin userLogin, @RequestParam String api,

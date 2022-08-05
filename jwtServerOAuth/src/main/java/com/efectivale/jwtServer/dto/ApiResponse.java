@@ -2,19 +2,19 @@ package com.efectivale.jwtServer.dto;
 
 public class ApiResponse extends ApiJwtResponse {
 
-	private Object response;
+	private JwtResponse responseToken;
 
-	public ApiResponse(int status, String mensaje,Object response) {
-		super(status,mensaje);
-		this.response = response;
+	public ApiResponse(int codigo, String mensaje,JwtResponse jwtTokenresponse) {
+		super(codigo,mensaje);
+		this.responseToken = jwtTokenresponse;
 	}
 
-	public Object getResponse() {
-		return response;
+	public JwtResponse getResponse() {
+		return responseToken;
 	}
 
-	public void setResponse(Object response) {
-		this.response = response;
+	public void setResponse(JwtResponse jwtTokenresponse) {
+		this.responseToken = jwtTokenresponse;
 	}
 	
 	
