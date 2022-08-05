@@ -5,20 +5,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.efectivale.jwtServer.dto.ApiJwtResponse;
 import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.*;
-import com.efectivale.jwtServer.dto.UserLogin;
-
 import com.efectivale.jwtServer.service.AuthService;
 import com.efectivale.jwtServer.utils.ConstantesJwt;
 import com.efectivale.jwtServer.validator.AuthValidator;
-
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -42,13 +38,13 @@ public class AuthController {
 			@ApiResponse(code = ConstantesJwt.Codes.INTERNAL_ERROR, message = ConstantesJwt.Swagger.INTERNAL_ERROR,response=Error500.class) 
 	})
 	@ApiOperation(value= ConstantesJwt.Swagger.CONTROLLER_DESCRIPTION, response = ApiJwtResponse.class)
-	@PostMapping(path =  ConstantesJwt.Oauth.GENERATION_TOKEN , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<ApiJwtResponse> login(@RequestBody UserLogin userLogin, @RequestParam String api,
-			@RequestParam String grantType) throws Exception{
-			validator.validate(userLogin,grantType);
+	@PostMapping(path =  ConstantesJwt.Oauth.GENERATION_TOKEN , produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<ApiJwtResponse> login(@RequestHeader String username, @RequestHeader String password
+			, @RequestParam String api,	@RequestParam String grantType) throws Exception{
+			validator.validate(username,password,grantType);
 			try {
-			return  service.login(userLogin.getUsername(),
-					userLogin.getPassword(), api);
+			return  service.login(username,
+					password, api);
 			}catch(Exception e) {
 				
 				throw new Exception(e.getMessage());
