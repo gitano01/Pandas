@@ -1,4 +1,9 @@
 package com.efectivale.jwtServer.service;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -13,6 +18,8 @@ import com.efectivale.jwtServer.dto.JwtResponse;
 import com.efectivale.jwtServer.security.JwtIO;
 import com.efectivale.jwtServer.utils.ConstantesJwt;
 import com.efectivale.jwtServer.utils.DateUtils;
+import com.efectivale.jwtServer.utils.Utils;
+import com.google.gson.Gson;
 import com.efectivale.jwtServer.utils.ConexionBD;
 
 
@@ -25,18 +32,28 @@ public class AuthService {
 	private JwtIO jwtIO;
 	@Autowired
 	private DateUtils dateUtils;
+	
+	
+	private Utils util = new Utils();
+	
 	@Value("${efv.jwt.token.expires-in}")
 	private int EXPIRES_IN;	
+	
+	
+	
+	ConexionBD conexion = new ConexionBD();	
+	private static final Logger LOG = Logger.getLogger(AuthService.class.getName());
 
-	ConexionBD conexion = new ConexionBD();
-	public ResponseEntity<ApiJwtResponse> login(String username, String password, String servicio) {
-
+	
+	
+	public ResponseEntity<ApiJwtResponse> login(String username, String password, String servicio, HttpServletRequest request) throws Exception  {
+		
+		LOG.info(ConstantesJwt.Oauth.log.PROCESS_BEGIN + AuthService.class.getName()+ " con parametros: usuario"+ username + " api: " + servicio + " ipConsumidor:"  +  util.getClientIpAddress(request));
 		// Ir a la base datos
 		DataUser dUser = null;		
 		JwtResponse jwt = null;
 		ApiJwtResponse response= null;
 		ResponseEntity<ApiJwtResponse> apiResponse = null;
-	
 		try {			
 			dUser = conexion.datosCredencial(username, password, servicio);
 			ApiData api = new ApiData();;
@@ -48,6 +65,8 @@ public class AuthService {
 					.clienteId(username).expiresIn(EXPIRES_IN).build();	
 			response = new ApiResponse(ConstantesJwt.Codes.OK,ConstantesJwt.ApiResponses.OK,jwt);
 			apiResponse  = new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.OK);
+			LOG.info(ConstantesJwt.Oauth.log.PROCESS_END+" en la clase"+ AuthService.class.getName()+ "con parametros: usuario"+  username + " api: " + servicio );
+			//conexion.guardaBitacora(username,password,  servicio,new Gson().toJson(apiResponse), util.getClientIpAddress(request));
 		}catch(Exception e) {
 			
 			String valueError = e.getMessage();
@@ -68,6 +87,7 @@ public class AuthService {
 			case 1:
 				response = new ErrorResponse(ConstantesJwt.Codes.BAD_REQUEST,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.USERNAMEPASSWORD_ERROR );
 				apiResponse  =  new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.BAD_REQUEST);
+				
 				break;
 			case 2: 
 				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, ConstantesJwt.Oauth.errorsDB.USERNAMEACTIVE_ERROR );
@@ -102,7 +122,11 @@ public class AuthService {
 				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.INTERNAL_SERVER_ERROR);
 				break;
 			}
+			
+			LOG.log(Level.SEVERE, ConstantesJwt.Oauth.log.PROCESS_INTERRUPTOR +" en la clase"+ AuthService.class.getName()+ " por error: "+  e.getMessage(), e.getMessage());		
 		}
+				
+		conexion.guardaBitacora(username,password,  servicio,new Gson().toJson(apiResponse), util.getClientIpAddress(request));
 		return apiResponse;		
 	}
 }

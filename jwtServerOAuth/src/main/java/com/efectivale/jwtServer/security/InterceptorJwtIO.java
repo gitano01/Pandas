@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class InterceptorJwtIO implements HandlerInterceptor {
 
+	
 	@Value("${efv.jwt.token.auth.path}")
 	private String AUTH_PATH;
 	@Value("#{'${efv.jwt.excluded.path}'.split(',')}")

@@ -1,7 +1,23 @@
 package com.efectivale.jwtServer.utils;
 
-
 public  class ConstantesJwt {
+	
+	
+	public static class dataIP{
+		public static final String[] HEADERS_TO_TRY = {
+				"X-Forwarded-For",
+	            "Proxy-Client-IP",
+	            "WL-Proxy-Client-IP",
+	            "HTTP_X_FORWARDED_FOR",
+	            "HTTP_X_FORWARDED",
+	            "HTTP_X_CLUSTER_CLIENT_IP",
+	            "HTTP_CLIENT_IP",
+	            "HTTP_FORWARDED_FOR",
+	            "HTTP_FORWARDED",
+	            "HTTP_VIA",
+	            "REMOTE_ADDR"
+		};
+	}
 	
 	public static class Oauth{
 		public static final String VERSION = "v1";
@@ -21,6 +37,13 @@ public  class ConstantesJwt {
 			public static final String API_ACTIVE_ERROR = "EL API A CONSUMIR NO SE ENCUENTRA ACTIVA, CONSULTA CON TU ADMINISTRADOR";
 			public static final String API_NOCREDENTIALS = "EL API A CONSUMIR NO TIENE ASOCIACIÓN CON LA CREDENCIAL DEL USUARIO";
 			}
+		
+		public static class log{
+			public static String PROCESS_BEGIN = "Inicia proceso de la clase:  ";
+			public static String PROCESS_END = "Termina proceso con éxito de la clase: ";
+			public static String PROCESS_INTERRUPTOR = "Proceso interrumpido ";			
+		}
+		
 	}
 	
 	public static class Params{
