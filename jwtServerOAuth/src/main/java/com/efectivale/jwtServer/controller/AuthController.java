@@ -9,24 +9,28 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.efectivale.jwtServer.dto.ApiJwtResponse;
-import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.*;
 import com.efectivale.jwtServer.service.AuthService;
+import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.ApiJwtMockResponse;
+import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.Error400;
+import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.Error401;
+import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.Error404;
+import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.Error500;
 import com.efectivale.jwtServer.utils.ConstantesJwt;
 import com.efectivale.jwtServer.utils.Utils;
 import com.efectivale.jwtServer.validator.AuthValidator;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
 
 @RequestMapping(path = ConstantesJwt.Oauth.VERSION)
 
@@ -57,14 +61,26 @@ public class AuthController {
 			, @RequestParam String api,	@RequestParam(ConstantesJwt.Params.GRANT_TYPE) String grantType, HttpServletRequest request) throws Exception{
 			validator.validate(username,password,grantType);
 			
+			HttpSession  session = request.getSession();
+			
 			try {
-				LOG.info(ConstantesJwt.Oauth.log.PROCESS_BEGIN + AuthService.class.getName()+ " con parametros: usuario"+ username + " api: " + api + ", ipConsumidor:"  +  util.getClientIpAddress(request));
-				ResponseEntity<ApiJwtResponse> response = service.login(username,
-						password, api,request);
-				LOG.info(ConstantesJwt.Oauth.log.PROCESS_END+AuthController.class.getName()+ " con parametros: usuario"+  username + " api: " + api   + ", ipConsumidor:"  +  util.getClientIpAddress(request));
+				LOG.info(ConstantesJwt.Oauth.log.PROCESS_BEGIN +"["+ AuthController.class.getName()+ "] | usuario: "+ username + " api: " + api 
+						+ ", ipConsumidor: "  +  util.getClientIpAddress(request));
+			
+				ResponseEntity<ApiJwtResponse> response = service.login(username,	password, api,request);
+				
+				if(response.getStatusCodeValue() != 200) {
+					LOG.log(Level.SEVERE, ConstantesJwt.Oauth.log.PROCESS_INTERRUPTOR +" en la clase ["+ AuthController.class.getName()+ "]  | usuario: " + username + ", api: " + api +" | [ detalle de error: "
+				+ response.getStatusCodeValue() + " | " + session.getAttribute("error").toString() +" ]");	
+					session.removeAttribute("error");
+				}else {
+				LOG.info(ConstantesJwt.Oauth.log.PROCESS_END+"["+AuthController.class.getName()+ "] | usuario: "+  username + " api: " + api   + ", ipConsumidor: "  
+				+  util.getClientIpAddress(request) +" |");
+				}				
+				
 			return  response;
 			}catch(Exception e) {				
-				LOG.log(Level.SEVERE, ConstantesJwt.Oauth.log.PROCESS_INTERRUPTOR +" en la clase"+ AuthController.class.getName()+ " por error: "+  e.getMessage(), e.getMessage());
+				
 				throw new Exception(e.getMessage());
 			}
 	}

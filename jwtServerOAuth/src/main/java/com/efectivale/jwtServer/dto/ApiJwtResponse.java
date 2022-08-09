@@ -3,7 +3,7 @@ package com.efectivale.jwtServer.dto;
 import lombok.Data;
 
 @Data
-public class ApiJwtResponse {
+public abstract class ApiJwtResponse {
 	private int  codigo;
 	private String mensaje;
 	public ApiJwtResponse(int codigo, String mensaje) {
