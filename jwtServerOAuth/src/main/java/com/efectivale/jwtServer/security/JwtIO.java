@@ -23,9 +23,8 @@ public class JwtIO {
 	@Value("${efv.jwt.issuer:none}")
 	private String ISSUER;
 	
-	public String generateToken(Object src, String secretKey){
+	public String generateToken(String secretKey){
 		
-		String subject = GsonUtils.serialize(src);
 		//Construye el HMAC usando SHA256
 		Signer signer = HMACSigner.newSHA256Signer(secretKey);
 		TimeZone tz = TimeZone.getTimeZone(TIMEZONE);
@@ -33,7 +32,6 @@ public class JwtIO {
 		
 		JWT jwt = new JWT().setIssuer(ISSUER)
 				.setIssuedAt(ZonedDateTime.now(tz.toZoneId()))
-				.setSubject(subject)
 				.setExpiration(zdt);
 		
 		return JWT.getEncoder().encode(jwt, signer);

@@ -41,9 +41,9 @@ public class ConexionBD {
 				@Override
 				public DataUser mapRow(ResultSet rs, int i) throws SQLException {
 					DataUser datos = new DataUser();
-					Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-					String secret = gson.toJson(rs.getString("rs_consumersecret"));
-					datos.setRs_consumersecret(secret);
+//					Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+//					String secret = gson.toJson(rs.getString("rs_consumersecret"));
+					datos.setRs_consumersecret(rs.getString("rs_consumersecret"));
 					datos.setRs_api(rs.getString("rs_api"));
 					datos.setRs_credencial_activa(rs.getString("rs_credencial_activa"));
 					return datos;

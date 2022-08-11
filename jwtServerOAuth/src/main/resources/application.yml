@@ -15,6 +15,6 @@ efv:
     token:
       auth:
         path: "/api/v1/oauth/client_credential/accesstoken"
-      expires-in: 360
+      expires-in: 600
     excluded:
       path: "/api/v1/multi,/api/v1/otherExcluded"  
