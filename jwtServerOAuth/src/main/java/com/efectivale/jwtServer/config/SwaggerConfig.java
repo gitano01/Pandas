@@ -2,7 +2,9 @@ package com.efectivale.jwtServer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import com.efectivale.jwtServer.utils.ConstantesJwt;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,6 +19,7 @@ public class SwaggerConfig {
 	
 		@Bean
 		public Docket api() {
+	
 			Docket docket =  new Docket(DocumentationType.SWAGGER_2);
 			docket.select()
 					.apis(RequestHandlerSelectors.basePackage("com.efectivale.jwtServer.controller"))

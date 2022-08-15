@@ -28,9 +28,4 @@ public class AuthValidator {
 		return apiResponse;
 		
 	}
-	
-	
-	
-
-	
 }
