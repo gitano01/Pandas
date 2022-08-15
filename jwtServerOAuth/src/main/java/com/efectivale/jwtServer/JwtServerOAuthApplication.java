@@ -7,12 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 
-
-
-
-
 @CrossOrigin(origins="*")
-
 @EnableAutoConfiguration
 @EnableConfigurationProperties
 @SpringBootApplication
