@@ -9,6 +9,6 @@ victor:
     timezone: America/Mexico
     issuer: 'https://www.efectivale.com.mx/'
     token:
-      secret: "and0U2VydmVyVG9rZW5QYXNz"
+      secret: "c3ViKjEzNXUqbzMxKm91YkwwMzA="
     excluded:
         path: "/v1/multi,/v1/otherExcluded"     

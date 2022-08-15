@@ -13,19 +13,20 @@ import io.fusionauth.jwt.hmac.HMACVerifier;
 @Component
 public class JwtIO {
 	
-	@Value("${victor.jwt.token.secret:secret}")
-	private String SECRET;
+//	@Value("${victor.jwt.token.secret:secret}")
+//	private String SECRET;
 	
 	
 	public boolean validateToken(String encode){		
 		JWT jwt = jwt(encode);
-		DataUser userData = new Gson().fromJson(getPayload(encode), DataUser.class);
-		
-		String cad = null;
-		if (userData.getRs_consumersecret().contains("\u003d")){
-			userData.setRs_consumersecret(userData.getRs_consumersecret().replace("\u003d", "="));
-		}
-		System.out.println(userData.toString());
+		System.out.println(jwt);
+//		DataUser userData = new Gson().fromJson(getPayload(encode), DataUser.class);
+//		
+//		String cad = null;
+//		if (userData.getRs_consumersecret().contains("\u003d")){
+//			userData.setRs_consumersecret(userData.getRs_consumersecret().replace("\u003d", "="));
+//		}
+//		System.out.println(userData.toString());
 		return jwt.isExpired();
 	}
 	
@@ -36,7 +37,8 @@ public class JwtIO {
 	}
 	
 	private  JWT jwt(String encodedJWT) {		
-		Verifier verifier = HMACVerifier.newVerifier(SECRET);		
+		//Verifier verifier = HMACVerifier.newVerifier(SECRET);
+		Verifier verifier = HMACVerifier.newVerifier("c3ViKjEzNXUqbzMxKm91YkwwMzA=");
 		JWT jwt = JWT.getDecoder().decode(encodedJWT, verifier);
 		
 		return jwt;
