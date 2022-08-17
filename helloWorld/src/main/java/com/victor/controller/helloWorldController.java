@@ -23,10 +23,9 @@ public class helloWorldController {
 	HelloWorldService service;
 	@GetMapping("/helloWorld")
 	public ResponseEntity<ApiResponse>  saludo(HttpServletRequest request) throws Exception{		
-		
 		try {
 			ResponseEntity<ApiResponse> valAuth = 	val.validate(request);
-			if(valAuth.getStatusCodeValue() == 400 || valAuth.getStatusCodeValue() == 401) {
+			if(valAuth.getStatusCodeValue() != 200) {
 				return valAuth;
 			}else {
 				try {
