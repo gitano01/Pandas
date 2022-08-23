@@ -7,7 +7,7 @@ victor:
     security:
       enabled: true
     timezone: America/Mexico
-    issuer: 'https://www.efectivale.com.mx/'
+    issuer: "https://www.efectivale.com.mx/"
     token:
       secret: "c3ViKjEzNXUqbzMxKm91YkwwMzA="
     excluded:
