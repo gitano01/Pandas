@@ -11,7 +11,6 @@ public class JwtResponse{
 	private String tokenType;		
 	private String accessToken;			
 	private int expiresIn;		
-	private String issuedAt;	
-	private String clienteId;
+	private String issuedAt;
 
 }

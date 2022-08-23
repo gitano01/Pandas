@@ -57,24 +57,22 @@ public class AuthController {
 	})
 	@ApiOperation(value= ConstantesJwt.Swagger.CONTROLLER_DESCRIPTION, response = ApiJwtResponse.class)
 	@PostMapping(path =  ConstantesJwt.Oauth.GENERATION_TOKEN , produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<ApiJwtResponse> login(@RequestHeader String username, @RequestHeader String password
-			, @RequestParam String api,	@RequestParam(ConstantesJwt.Params.GRANT_TYPE) String grantType, HttpServletRequest request) throws Exception{
-			validator.validate(username,password,grantType);
+	public @ResponseBody ResponseEntity<ApiJwtResponse> login(@RequestParam(ConstantesJwt.Params.GRANT_TYPE) String grantType, HttpServletRequest request) throws Exception{
+			validator.validate(request,grantType);
 			
 			HttpSession  session = request.getSession();
 			
 			try {
-				LOG.info(ConstantesJwt.Oauth.log.PROCESS_BEGIN +"["+ AuthController.class.getName()+ "] | usuario: "+ username + " api: " + api 
-						+ ", ipConsumidor: "  +  util.getClientIpAddress(request));
+				LOG.info(ConstantesJwt.Oauth.log.PROCESS_BEGIN +"["+ AuthController.class.getName()+ "] | ipConsumidor: "  +  util.getClientIpAddress(request));
 			
-				ResponseEntity<ApiJwtResponse> response = service.login(username,	password, api,request);
+				ResponseEntity<ApiJwtResponse> response = service.login(request);
 				
 				if(response.getStatusCodeValue() != 200) {
-					LOG.log(Level.SEVERE, ConstantesJwt.Oauth.log.PROCESS_INTERRUPTOR +" en la clase ["+ AuthController.class.getName()+ "]  | usuario: " + username + ", api: " + api +" | [ detalle de error: "
+					LOG.log(Level.SEVERE, ConstantesJwt.Oauth.log.PROCESS_INTERRUPTOR +" en la clase ["+ AuthController.class.getName()+ "]  | [ detalle de error: "
 				+ response.getStatusCodeValue() + " | " + session.getAttribute("error").toString() +" ]");	
 					session.removeAttribute("error");
 				}else {
-				LOG.info(ConstantesJwt.Oauth.log.PROCESS_END+"["+AuthController.class.getName()+ "] | usuario: "+  username + " api: " + api   + ", ipConsumidor: "  
+				LOG.info(ConstantesJwt.Oauth.log.PROCESS_END+"["+AuthController.class.getName()+ "] |  ipConsumidor: "  
 				+  util.getClientIpAddress(request) +" |");
 				}				
 				
