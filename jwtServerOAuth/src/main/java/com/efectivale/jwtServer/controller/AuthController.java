@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.efectivale.jwtServer.dto.ApiJwtResponse;
 import com.efectivale.jwtServer.service.AuthService;
 import com.efectivale.jwtServer.swaggerdto.SwaggerDocResposes.ApiJwtMockResponse;
@@ -31,6 +29,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 
 @RequestMapping(path = ConstantesJwt.Oauth.VERSION)
 
@@ -55,7 +54,7 @@ public class AuthController {
 			@ApiResponse(code = ConstantesJwt.Codes.NOT_FOUND, message = ConstantesJwt.Swagger.NOT_FOUND,response=Error404.class),
 			@ApiResponse(code = ConstantesJwt.Codes.INTERNAL_ERROR, message = ConstantesJwt.Swagger.INTERNAL_ERROR,response=Error500.class) 
 	})
-	@ApiOperation(value= ConstantesJwt.Swagger.CONTROLLER_DESCRIPTION, response = ApiJwtResponse.class)
+	@ApiOperation(value= ConstantesJwt.Swagger.CONTROLLER_DESCRIPTION, authorizations = { @Authorization(value="basicAuth") },response = ApiJwtResponse.class)
 	@PostMapping(path =  ConstantesJwt.Oauth.GENERATION_TOKEN , produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<ApiJwtResponse> login(@RequestParam(ConstantesJwt.Params.GRANT_TYPE) String grantType, HttpServletRequest request) throws Exception{
 			validator.validate(request,grantType);
