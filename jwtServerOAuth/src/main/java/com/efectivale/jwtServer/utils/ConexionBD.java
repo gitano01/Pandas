@@ -32,12 +32,16 @@ public class ConexionBD {
 
 	public void guardaBitacora(String response, String ipConsumidor) throws Exception, SQLException {
 
+		try {
 		call = new SimpleJdbcCall(dataSourceConf).withFunctionName("tok_ins_bitacora");
 		MapSqlParameterSource in = new MapSqlParameterSource();
 		in.addValue("dateconsumed", new Date());
 		in.addValue("details", response);
 		in.addValue("remote_address", ipConsumidor);
 		call.execute(in);
+		}catch(Exception e) {
+			throw new Exception(e.getMessage());
+		}
 	}
 
 }

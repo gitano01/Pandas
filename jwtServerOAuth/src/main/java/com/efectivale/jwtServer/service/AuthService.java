@@ -63,49 +63,50 @@ public class AuthService {
 		}catch(Exception e) {
 			
 			String valueError = e.getMessage();
+			String error = ConstantesJwt.ApiResponses.ERROR;
 			int op = 0;
 			
 			//Error credenciales
-			if(valueError.contains(ConstantesJwt.Oauth.errorsDB.CREDENTIAL_NO_EXIST )) {op = 1;}
-			if(valueError.contains(ConstantesJwt.Oauth.errorsDB.CREDENTIAL_ACTIVE_ERROR)) {op = 2;	}
-			if(valueError.contains(ConstantesJwt.Oauth.errorsDB.CREDENTIAL_API_ACTIVE_ERROR)) {op = 3;}
-			if(valueError.contains(ConstantesJwt.Oauth.errorsDB.CREDENTIAL_NO_ASOCIATE)) {op = 4;}
+			if(valueError.contains(ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_NO_EXIST )) {op = 1;}
+			if(valueError.contains(ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_ACTIVE_ERROR)) {op = 2;	}
+			if(valueError.contains(ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_API_ACTIVE_ERROR)) {op = 3;}
+			if(valueError.contains(ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_NO_ASOCIATE)) {op = 4;}
 			
 		
 			switch (op) {
 
 			case 1: 
 				response = new ErrorResponse(ConstantesJwt.Codes.NOT_FOUND,ConstantesJwt.ApiResponses.FAILURE, 
-						ConstantesJwt.Oauth.errorsDB.CREDENTIAL_NO_EXIST );
+						ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_NO_EXIST );
 				apiResponse  =  new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.NOT_FOUND);	
-				session.setAttribute("error", ConstantesJwt.Oauth.errorsDB.CREDENTIAL_NO_EXIST);
+				session.setAttribute(error, ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_NO_EXIST);
 				break;
 			case 2: 
 				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, 
-						ConstantesJwt.Oauth.errorsDB.CREDENTIAL_ACTIVE_ERROR  );
+						ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_ACTIVE_ERROR  );
 				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
-				session.setAttribute("error", ConstantesJwt.Oauth.errorsDB.CREDENTIAL_ACTIVE_ERROR );
+				session.setAttribute(error, ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_ACTIVE_ERROR );
 				break;
 			case 3:
 				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE, 
-						ConstantesJwt.Oauth.errorsDB.CREDENTIAL_API_ACTIVE_ERROR );
+						ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_API_ACTIVE_ERROR );
 				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
-				session.setAttribute("error", ConstantesJwt.Oauth.errorsDB.CREDENTIAL_API_ACTIVE_ERROR);
+				session.setAttribute(error, ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_API_ACTIVE_ERROR);
 				break;
 			case 4:
 				response = new ErrorResponse(ConstantesJwt.Codes.UNAUTHORIZED,ConstantesJwt.ApiResponses.FAILURE,
-						ConstantesJwt.Oauth.errorsDB.CREDENTIAL_NO_ASOCIATE );
+						ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_NO_ASOCIATE );
 				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.UNAUTHORIZED);
-				session.setAttribute("error", ConstantesJwt.Oauth.errorsDB.CREDENTIAL_NO_ASOCIATE);
+				session.setAttribute(error, ConstantesJwt.Oauth.ErrorsDB.CREDENTIAL_NO_ASOCIATE);
 				break;
 			default:
 				response = new ErrorResponse(ConstantesJwt.Codes.INTERNAL_ERROR,ConstantesJwt.ApiResponses.FAILURE, e.getMessage());
 				apiResponse  =   new ResponseEntity<ApiJwtResponse>((ApiJwtResponse)response,HttpStatus.INTERNAL_SERVER_ERROR);
-				session.setAttribute("error", e.getMessage());
+				session.setAttribute(error, e.getMessage());
 				break;
 			}
 			LOG.log(Level.SEVERE, ConstantesJwt.Oauth.log.PROCESS_INTERRUPTOR +" en la clase ["+ AuthService.class.getName()+ "]  | [ detalle de error: "
-					+ apiResponse.getStatusCodeValue() + " | " + session.getAttribute("error").toString() +" ]");
+					+ apiResponse.getStatusCodeValue() + " | " + session.getAttribute(error).toString() +" ]");
 			conexion.guardaBitacora(new Gson().toJson(apiResponse), util.getClientIpAddress(request));			
 					
 		}

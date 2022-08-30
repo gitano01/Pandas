@@ -12,13 +12,15 @@ public class ConstantesJwt {
 		public static final String VERSION = "v1";
 		public static final String GENERATION_TOKEN = "oauth/client_credential/accesstoken";
 
-		public static class errorsDB {
+		public static class ErrorsDB {
 
+			
 			// errores credencial
-			public static final String CREDENTIAL_NO_EXIST = "LAS CREDENCIALES NO EXISTEN";
+			public static String CREDENTIAL_NO_EXIST = "LAS CREDENCIALES NO EXISTEN";
 			public static final String CREDENTIAL_ACTIVE_ERROR = "LA CREDENCIAL NO SE ENCUENTRA ACTIVA, CONSULTA CON TU ADMINISTRADOR";
 			public static final String CREDENTIAL_API_ACTIVE_ERROR = "LA CREDENCIAL NO ESTA ACTIVA PARA REALIZAR LA SOLICITUD AL RECURSO";
 			public static final String CREDENTIAL_NO_ASOCIATE = "LA CREDENCIAL NO ESTA ASOCIADA A UN API";
+					
 		}
 
 		public static class log {
@@ -71,6 +73,7 @@ public class ConstantesJwt {
 		// Strings Respuestas
 		public static final String OK = "Operación Exitosa";
 		public static final String FAILURE = "Operación fallida";
+		public static final String ERROR = "error";
 
 	}
 

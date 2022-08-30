@@ -17,7 +17,11 @@ public class TypesEncription {
 	}
 	
 	public String desencriptaB64(String pass) throws Exception{		
+		try {
 		byte[] decodedBytes = Base64.getDecoder().decode(pass); 		
 		return new String(decodedBytes);
+		}catch(Exception e) {
+			throw new Exception (e.getMessage());
+		}
 	}
 }
